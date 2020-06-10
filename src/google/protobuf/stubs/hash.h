@@ -37,7 +37,7 @@
 
 #include <string.h>
 #include <google/protobuf/stubs/common.h>
-#include "config.h"
+#include <google/protobuf/config.h>
 
 #if defined(HAVE_HASH_MAP) && defined(HAVE_HASH_SET)
 #include HASH_MAP_H
@@ -125,7 +125,7 @@ struct hash<const char*>
 template <typename Key, typename Data,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
-class hash_map : public HASH_NAMESPACE::unordered_map<
+class hash_map : public HASH_NAMESPACE::HASH_MAP_CLASS<
     Key, Data, HashFcn> {
  public:
   hash_map(int = 0) {}
@@ -134,7 +134,7 @@ class hash_map : public HASH_NAMESPACE::unordered_map<
 template <typename Key,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
-class hash_set : public HASH_NAMESPACE::unordered_set<
+class hash_set : public HASH_NAMESPACE::HASH_SET_CLASS<
     Key, HashFcn> {
  public:
   hash_set(int = 0) {}
@@ -194,7 +194,7 @@ struct hash<string> {
 
   static const size_t bucket_size = 4;
   static const size_t min_buckets = 8;
-  inline size_t operator()(const string& a, const string& b) const {
+  inline bool operator()(const string& a, const string& b) const {
     return a < b;
   }
 };
@@ -212,7 +212,7 @@ struct hash<pair<First, Second> > {
 
   static const size_t bucket_size = 4;
   static const size_t min_buckets = 8;
-  inline size_t operator()(const pair<First, Second>& a,
+  inline bool operator()(const pair<First, Second>& a,
                            const pair<First, Second>& b) const {
     return a < b;
   }
