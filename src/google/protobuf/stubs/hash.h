@@ -194,7 +194,7 @@ struct hash<string> {
 
   static const size_t bucket_size = 4;
   static const size_t min_buckets = 8;
-  inline size_t operator()(const string& a, const string& b) const {
+  inline bool operator()(const string& a, const string& b) const {
     return a < b;
   }
 };
@@ -212,7 +212,7 @@ struct hash<pair<First, Second> > {
 
   static const size_t bucket_size = 4;
   static const size_t min_buckets = 8;
-  inline size_t operator()(const pair<First, Second>& a,
+  inline bool operator()(const pair<First, Second>& a,
                            const pair<First, Second>& b) const {
     return a < b;
   }
