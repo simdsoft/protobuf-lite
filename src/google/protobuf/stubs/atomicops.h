@@ -176,17 +176,32 @@ GOOGLE_PROTOBUF_ATOMICOPS_ERROR
 #elif defined(__GNUC__)
 #if defined(GOOGLE_PROTOBUF_ARCH_IA32) || defined(GOOGLE_PROTOBUF_ARCH_X64)
 #include <google/protobuf/stubs/atomicops_internals_x86_gcc.h>
-#elif defined(GOOGLE_PROTOBUF_ARCH_ARM)
+#elif defined(GOOGLE_PROTOBUF_ARCH_ARM) && defined(__linux__)
 #include <google/protobuf/stubs/atomicops_internals_arm_gcc.h>
+#elif defined(GOOGLE_PROTOBUF_ARCH_AARCH64)
+#include <google/protobuf/stubs/atomicops_internals_arm64_gcc.h>
 #elif defined(GOOGLE_PROTOBUF_ARCH_ARM_QNX)
 #include <google/protobuf/stubs/atomicops_internals_arm_qnx.h>
-#elif defined(GOOGLE_PROTOBUF_ARCH_MIPS)
+#elif defined(GOOGLE_PROTOBUF_ARCH_MIPS) || defined(GOOGLE_PROTOBUF_ARCH_MIPS64)
 #include <google/protobuf/stubs/atomicops_internals_mips_gcc.h>
-#elif defined(__pnacl__)
+#elif defined(GOOGLE_PROTOBUF_ARCH_POWER)
+#include <google/protobuf/stubs/atomicops_internals_power.h>
+#elif defined(__native_client__)
 #include <google/protobuf/stubs/atomicops_internals_pnacl.h>
-#else
+#elif defined(GOOGLE_PROTOBUF_ARCH_PPC)
+#include <google/protobuf/stubs/atomicops_internals_ppc_gcc.h>
+#elif (((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4))
 #include <google/protobuf/stubs/atomicops_internals_generic_gcc.h>
+#elif defined(__clang__)
+#if __has_extension(c_atomic)
+#include <google/protobuf/stubs/atomicops_internals_generic_gcc.h>
+#else
+#error GOOGLE_PROTOBUF_ATOMICOPS_ERROR
 #endif
+#else
+#error GOOGLE_PROTOBUF_ATOMICOPS_ERROR
+#endif
+
 
 // Unknown.
 #else
