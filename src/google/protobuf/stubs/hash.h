@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -37,7 +37,7 @@
 
 #include <string.h>
 #include <google/protobuf/stubs/common.h>
-#include "config.h"
+#include <google/protobuf/config.h>
 
 #if defined(HAVE_HASH_MAP) && defined(HAVE_HASH_SET)
 #include HASH_MAP_H
@@ -125,7 +125,7 @@ struct hash<const char*>
 template <typename Key, typename Data,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
-class hash_map : public HASH_NAMESPACE::unordered_map<
+class hash_map : public HASH_NAMESPACE::HASH_MAP_CLASS<
     Key, Data, HashFcn> {
  public:
   hash_map(int = 0) {}
@@ -134,7 +134,7 @@ class hash_map : public HASH_NAMESPACE::unordered_map<
 template <typename Key,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
-class hash_set : public HASH_NAMESPACE::unordered_set<
+class hash_set : public HASH_NAMESPACE::HASH_SET_CLASS<
     Key, HashFcn> {
  public:
   hash_set(int = 0) {}
@@ -205,7 +205,7 @@ struct hash<pair<First, Second> > {
     size_t first_hash = hash<First>()(key.first);
     size_t second_hash = hash<Second>()(key.second);
 
-    // IDEA(kenton):  What is the best way to compute this hash?  I have
+    // FIXME(kenton):  What is the best way to compute this hash?  I have
     // no idea!  This seems a bit better than an XOR.
     return first_hash * ((1 << 16) - 1) + second_hash;
   }

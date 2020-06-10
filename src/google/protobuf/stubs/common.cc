@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -115,8 +115,8 @@ void DefaultLogHandler(LogLevel level, const char* filename, int line,
   fflush(stderr);  // Needed on MSVC.
 }
 
-void NullLogHandler(LogLevel level, const char* filename, int line,
-                    const string& message) {
+void NullLogHandler(LogLevel /* level */, const char* /* filename */,
+                    int /* line */, const string& /* message */) {
   // Nothing.
 }
 
@@ -314,7 +314,7 @@ void Mutex::Unlock() {
 
 void Mutex::AssertHeld() {
   // pthreads dosn't provide a way to check which thread holds the mutex.
-  // REFINE(kenton):  Maybe keep track of locking thread ID like with WIN32?
+  // TODO(kenton):  Maybe keep track of locking thread ID like with WIN32?
 }
 
 #endif
@@ -322,7 +322,7 @@ void Mutex::AssertHeld() {
 // ===================================================================
 // emulates google3/util/endian/endian.h
 //
-// REFINE(xiaofeng): PROTOBUF_LITTLE_ENDIAN is unfortunately defined in
+// TODO(xiaofeng): PROTOBUF_LITTLE_ENDIAN is unfortunately defined in
 // google/protobuf/io/coded_stream.h and therefore can not be used here.
 // Maybe move that macro definition here in the furture.
 uint32 ghtonl(uint32 x) {
